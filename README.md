@@ -163,8 +163,105 @@ mdhn:localFihristID a owl:DatatypeProperty ;
 mdhn:derivedFromTEI a owl:ObjectProperty ;
     rdfs:subPropertyOf prov:wasDerivedFrom .
 ```
+## Mapping Strategy & Real Sample
 
-**Full detailed mapping examples** (including the `Add_580.xml` sample) will be added in the `docs/mappings/` directory.
+### Mapping Principles
+- **Direct & Faithful**: Every major TEI element maps to one or more ontology classes/properties.
+- **Relations First**: `@key`, `@target`, and structural nesting become RDF object properties.
+- **Roles**: Dedicated `mdhn:has*` properties for clarity and easy merging.
+- **Reconciliation**: Use `mdhn:localFihristID` + `owl:sameAs`.
+- **Provenance**: All generated triples link back via `mdhn:derivedFromTEI`.
+- **Bilingual**: Persian/Arabic/English labels preserved.
+
+### Real Example: Add_580.xml (Cambridge University Library)
+
+**Source TEI** (excerpts): [Add_580.xml](https://raw.githubusercontent.com/fihristorg/fihrist-mss/master/collections/cambridge%20university/Add_580.xml)
+
+#### 1. Manuscript Identifier & Repository
+**TEI**
+```xml
+<msDesc xml:id="Add_580">
+  <msIdentifier>
+    <repository>University Library</repository>
+    <idno>Add. 580</idno>
+  </msIdentifier>
+```
+
+**RDF Turtle**
+
+```turtle
+ex:Add_580 a mdhn:Manuscript ;
+    rdfs:label "Add. 580 - al-Miṣbāḥ fī al-naḥw"@en ;
+    mdhn:hasIdentifier "Add. 580" ;
+    mdhn:repository ex:Cambridge_University_Library ;
+    mdhn:derivedFromTEI <https://github.com/fihristorg/fihrist-mss/.../Add_580.xml> .
+```
+#### 2. Content, Work & Author (Core Relation)
+**TEI**
+
+```xml
+<msItem xml:id="Add_580-item1">
+  <author key="person_90040229">
+    <persName xml:lang="ar">المطرزي، ناصر بن عبد السيد</persName>
+  </author>
+  <title xml:lang="ar" key="work_2024">المصباح في النحو</title>
+  <textLang mainLang="ar">Arabic</textLang>
+</msItem>
+```
+
+**RDF Turtle**
+
+```turtle
+ex:Add_580 mdhn:hasContentItem ex:Item_Add580_1 .
+
+ex:Item_Add580_1 a mdhn:ManuscriptItem ;
+    mdhn:refersToWork ex:Work_2024 ;
+    mdhn:hasAuthor ex:Person_90040229 .
+
+ex:Person_90040229 a mdhn:Person ;
+    rdfs:label "المطرزي، ناصر بن عبد السيد"@ar ;
+    mdhn:localFihristID "person_90040229" ;
+    owl:sameAs <https://www.wikidata.org/wiki/Q...> .   # after reconciliation
+
+ex:Work_2024 a mdhn:Work ;
+    rdfs:label "المصباح في النحو"@ar ;
+    mdhn:localFihristID "work_2024" .
+```
+
+#### 3. Provenance & Roles
+**TEI**
+
+```xml
+<acquisition>Bequest of <persName key="person_f3466" role="fmo">R.E. Lofft</persName> in 1869.</acquisition>
+```
+
+**RDF Turtle**
+
+```turtle
+ex:Add_580 mdhn:hasRoleAsFormerOwner ex:Person_f3466 .
+
+ex:Person_f3466 mdhn:hasRoleAsFormerOwner ex:Add_580 >>
+    crm:P4_has_time-span "1869"^^xsd:gYear .
+```
+
+
+#### 4. Physical Description (Codicology)
+**TEI**
+
+```xml
+<physDesc>
+  <objectDesc form="codex">
+    <supportDesc material="chart">...</supportDesc>
+  </objectDesc>
+</physDesc>
+```
+
+**RDF Turtle**
+
+```turtle
+ex:Add_580 mdhn:hasSupport [ a crm:E57_Material ; crm:P2_has_type "chart" ] ;
+    crm:P2_has_type "codex" .
+```
 
 ## Project Structure
 
