@@ -243,4 +243,3 @@ This project is released under the [CC0 1.0 Universal](https://creativecommons.o
 
 **Next milestone**: Implementation of the `transform.py` harvester (based exactly on this ontology).
 
-
