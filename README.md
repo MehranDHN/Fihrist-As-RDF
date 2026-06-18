@@ -15,12 +15,10 @@ Built for seamless integration into the **III FDexir** aggregator and MLDCH plat
 - Transform all TEI XML data and their relations into a clean, ontology-based RDF graph.
 - Preserve **100% of the original relations** between manuscripts, persons, works, provenance, and physical descriptions.
 - Provide a minimal but systematically expandable core ontology (`mdhn:` namespace).
-- Enable **exact matching** and merging with existing data (e.g. `PersonsRDFData.ttl`) using `owl:sameAs` and `skos:exactMatch`.
+- Enable reconciliation: `owl:sameAs`, `skos:exactMatch`, `skos:closeMatch`.
 - Model **roles** (author, scribe, former owner, etc.) as first-class object properties.
 - Support IIIF deep linking, SPARQL querying, GraphRAG, and community contributions.
 - Serve as a reusable, well-documented module that can be merged into larger Persian/Islamicate cultural heritage projects.
-- Preserve **100% of original relations** and metadata.
-- Enable reconciliation: `owl:sameAs`, `skos:exactMatch`, `skos:closeMatch`.
 - Flag unmatched entities (`mdhn:needsWikidataCreation` or similar) for future investigation and contribution to Wikidata.
 - Produce LOUD-compliant data (persistent URIs, provenance, multi-language labels).
 - Document all decisions, workflow, and tools transparently.
