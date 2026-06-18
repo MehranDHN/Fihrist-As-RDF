@@ -19,6 +19,12 @@ Built for seamless integration into the **III FDexir** aggregator and MLDCH plat
 - Model **roles** (author, scribe, former owner, etc.) as first-class object properties.
 - Support IIIF deep linking, SPARQL querying, GraphRAG, and community contributions.
 - Serve as a reusable, well-documented module that can be merged into larger Persian/Islamicate cultural heritage projects.
+- Preserve **100% of original relations** and metadata.
+- Enable reconciliation: `owl:sameAs`, `skos:exactMatch`, `skos:closeMatch`.
+- Flag unmatched entities (`mdhn:needsWikidataCreation` or similar) for future investigation and contribution to Wikidata.
+- Produce LOUD-compliant data (persistent URIs, provenance, multi-language labels).
+- Document all decisions, workflow, and tools transparently.
+
 
 ## Data Model (Ontology Draft v0.1)
 
@@ -164,6 +170,11 @@ mdhn:derivedFromTEI a owl:ObjectProperty ;
     rdfs:subPropertyOf prov:wasDerivedFrom .
 ```
 ## Mapping Strategy & Real Sample
+**Principles**:
+- Direct mapping from TEI elements to ontology classes/properties.
+- All `@key`, `@target`, roles, dates, and structural nesting become explicit RDF relations.
+- Reconciliation hooks are added for every entity.
+- Provenance is tracked back to the source TEI file.
 
 ### Mapping Principles
 - **Direct & Faithful**: Every major TEI element maps to one or more ontology classes/properties.
@@ -177,6 +188,13 @@ mdhn:derivedFromTEI a owl:ObjectProperty ;
 
 **Source TEI** (excerpts): [Add_580.xml](https://raw.githubusercontent.com/fihristorg/fihrist-mss/master/collections/cambridge%20university/Add_580.xml)
 
+### Source TEI Data
+
+The TEI files are in the upstream repository [`fihristorg/fihrist-mss/collections/`](https://github.com/fihristorg/fihrist-mss).
+
+**Recommended**: Git submodule (see Quick Start).  
+**Alternative** (if submodule fails): Download ZIP and extract to `data/input/fihrist-mss/`.
+
 #### 1. Manuscript Identifier & Repository
 **TEI**
 ```xml
@@ -186,6 +204,15 @@ mdhn:derivedFromTEI a owl:ObjectProperty ;
     <idno>Add. 580</idno>
   </msIdentifier>
 ```
+
+### Harvester (`scripts/transform.py`)
+
+- **As Is Transformation**: Preserves all original data and relations.
+- **Per-Entity-Type Output**: `people.ttl`, `manuscripts.ttl`, `works.ttl`, etc. (optimized for GraphDB import).
+- **URI Strategy**: `mdhn:` namespace + sanitized IDs (handles invalid characters).
+- **Reconciliation**: Every entity gets `mdhn:localFihristID`; unmatched ones are flagged with `mdhn:needsAuthorityReconciliation`.
+- **LOUD Compliance**: Persistent URIs, provenance (`prov:wasDerivedFrom`), multi-language labels.
+
 
 **RDF Turtle**
 
@@ -285,6 +312,44 @@ Fihrist-As-RDF/
 ├── Dockerfile
 └── README.md
 ```
+## Data Pipeline & Output Structure
+
+### Source TEI Data (Git Submodule)
+
+See "Data Pipeline & Setup" section above for submodule instructions.
+
+### Output Strategy (Per Entity Type)
+
+We generate **one Turtle file per major entity type** instead of one file per manuscript. This is optimized for:
+- Easy import into Ontotext GraphDB
+- Reconciliation (all Persons in one file)
+- Graph union / merging into IIIFDexir
+- Clear separation of concerns
+
+**Generated files** (`data/rdf/`):
+- `manuscripts.ttl`
+- `people.ttl`
+- `works.ttl`
+- `manuscript_items.ttl`
+- `events.ttl`
+- `subjects.ttl`
+- `full_graph.ttl` (combined for convenience)
+
+**URI Strategy**:
+All resources use the `mdhn:` namespace with sanitized IDs:
+- `https://github.com/MehranDHN/Fihrist-As-RDF/data/rdf/ms_Add_580`
+- `https://github.com/MehranDHN/Fihrist-As-RDF/data/rdf/person_90040229`
+
+Invalid characters (`-`, `:`, spaces, etc.) are automatically converted to `_`.
+
+### Importing into Ontotext GraphDB
+
+1. Create a new repository in GraphDB Desktop.
+2. Import the ontology first (`ontology/fihrist-crm-alignment.ttl`).
+3. Import entity files in this order: `people.ttl` → `works.ttl` → `manuscripts.ttl` etc.
+4. Use "OWL2 RL" or "RDFS" inference if needed.
+5. Run SHACL validation (future).
+
 
 ## Quick Start
 
