@@ -60,6 +60,80 @@ graph TD
 - `mdhn:Work` ⊑ `frbr:Work`
 - `mdhn:Subject` ⊑ `skos:Concept`
 
+### `ontology/mdhn-fihrist.ttl` (Minimal Ontology with Subjects/Person Focus)
+```turtle
+@prefix mdhn: <https://MehranDHN.github.io/mdhn-ontology#> .
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix viaf: <https://viaf.org/viaf/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix aat: <http://vocab.getty.edu/aat/> .
+@prefix lcsh: <http://id.loc.gov/authorities/subjects/> .
+
+# Ontology Metadata
+mdhn: a owl:Ontology ;
+    rdfs:label "mdhn: Fihrist-As-RDF Ontology" ;
+    dct:description "Minimal expandable ontology for Fihrist TEI manuscripts with strong reconciliation." .
+
+# Classes
+mdhn:Manuscript a owl:Class ;
+    rdfs:subClassOf crm:E22_Manifestation ;
+    rdfs:label "Manuscript" .
+
+mdhn:ManuscriptItem a owl:Class ;
+    rdfs:subClassOf frbr:Expression ;
+    rdfs:label "Manuscript Content Item" .
+
+mdhn:Person a owl:Class ;
+    rdfs:subClassOf crm:E21_Person ;
+    rdfs:label "Person (with roles)" .
+
+mdhn:Work a owl:Class ;
+    rdfs:subClassOf frbr:Work ;
+    rdfs:label "Literary/Artistic Work" .
+
+mdhn:Subject a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Subject Concept (LCSH + mappings)" .
+
+# Properties
+mdhn:hasManuscriptItem a owl:ObjectProperty ;
+    rdfs:domain mdhn:Manuscript ;
+    rdfs:range mdhn:ManuscriptItem .
+
+mdhn:authoredBy a owl:ObjectProperty ;
+    rdfs:domain mdhn:ManuscriptItem ;
+    rdfs:range mdhn:Person .
+
+mdhn:referencesWork a owl:ObjectProperty ;
+    rdfs:domain mdhn:ManuscriptItem ;
+    rdfs:range mdhn:Work .
+
+mdhn:hasSubject a owl:ObjectProperty ;
+    rdfs:domain mdhn:ManuscriptItem ;
+    rdfs:range mdhn:Subject .
+
+mdhn:reconciledTo a owl:ObjectProperty ;
+    rdfs:label "Reconciled to external authority" .
+
+# Example Instances (expand via pipeline)
+lcsh:sh85055328 a mdhn:Subject ;
+    skos:prefLabel "Glossaries, vocabularies, etc."@en ;
+    mdhn:reconciledTo aat:300000000 ;  # Placeholder - refine with exact AAT
+    mdhn:reconciledTo wd:Q12345 ;     # Placeholder Wikidata
+    skos:exactMatch lcsh:sh85055328 .
+
+# Person example (extend VIAF with Wikidata)
+<mdhn:person_f3010> a mdhn:Person ;
+    rdfs:label "Mīr Sayyid Ḥusayn" ;
+    mdhn:reconciledTo viaf:123456 ;   # Existing style
+    mdhn:reconciledTo wd:Q... .       # Wikidata extension
+```
+
 **Key Properties**:
 - Linking: `mdhn:hasManuscriptItem`, `mdhn:authoredBy` (with roles), `mdhn:referencesWork`, `mdhn:hasSubject`
 - Reconciliation: `mdhn:reconciledTo` (object property to external URIs)
