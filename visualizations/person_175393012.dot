@@ -1,0 +1,103 @@
+// Neighbourhood of fihrist:person_175393012 (Mīr Khvānd)
+// Source: data/rdf/harvest_ancient_india_and_iran_trust.ttl
+// Query: person → contribution → manuscript + item/work + subjects
+//
+// Render:  dot -Tsvg visualizations/person_175393012.dot -o visualizations/person_175393012.svg
+
+digraph person_175393012 {
+    rankdir=LR;
+    fontname="Segoe UI, Helvetica, Arial, sans-serif";
+    node [fontname="Segoe UI, Helvetica, Arial, sans-serif", fontsize=11, shape=box, style="rounded,filled"];
+    edge [fontname="Segoe UI, Helvetica, Arial, sans-serif", fontsize=9, color="#555555"];
+
+    // --- agent ---
+    person [
+        label="fihrist:person_175393012\nMīr Khvānd\nMuḥammad ibn Khāvandshāh\n1433–1498",
+        fillcolor="#D6EAF8",
+        color="#1A5276",
+        penwidth=2
+    ];
+    viaf [
+        label="viaf:175393012",
+        shape=ellipse, fillcolor="#F4F6F7", fontsize=9
+    ];
+    lcnaf [
+        label="lcnaf:n82027925",
+        shape=ellipse, fillcolor="#F4F6F7", fontsize=9
+    ];
+
+    // --- role ---
+    contrib [
+        label="contrib:…_aut_AIIT_Pers_1_01_item1\nmdhn:Contribution\nrole = rel:aut (author)",
+        fillcolor="#E8DAEF",
+        color="#6C3483"
+    ];
+
+    // --- manuscript ---
+    ms [
+        label="fihrist:manuscript_11855\nAIIT Pers. 1.01\ncodex · Persian · Thatta",
+        fillcolor="#D5F5E3",
+        color="#196F3D",
+        penwidth=2
+    ];
+    glam [
+        label="glam:Ancient_India_and_Iran_Trust\nheldBy",
+        fillcolor="#D5F5E3", fontsize=9
+    ];
+
+    // --- content ---
+    item [
+        label="item:manuscript_11855_AIIT_Pers_1_01_item1\nRawz̤at al-Ṣafāʼ\nxmlId = AIIT_Pers_1_01-item1",
+        fillcolor="#FDEBD0",
+        color="#B9770E"
+    ];
+    work [
+        label="fihrist:work_273\nRawz̤at al-Ṣafāʼ",
+        fillcolor="#FADBD8",
+        color="#922B21"
+    ];
+
+    subgraph cluster_daftar {
+        label="nested msItems (daftars)";
+        color="#D5D8DC";
+        style="rounded";
+        d1 [label="item1  Daftar-i chahārum", fillcolor="#FCF3CF", fontsize=9];
+        d2 [label="item2  Daftar-i panjum", fillcolor="#FCF3CF", fontsize=9];
+        d3 [label="item3  Daftar-i shishum", fillcolor="#FCF3CF", fontsize=9];
+        d4 [label="item4  Daftar-i haftum", fillcolor="#FCF3CF", fontsize=9];
+        d5 [label="item5  Khātimah", fillcolor="#FCF3CF", fontsize=9];
+    }
+
+    // --- subjects of the manuscript this person is involved in ---
+    s1 [
+        label="fihrist:subject_sh85068446\nIslamic Empire--History\nLC ComplexSubject\nfacets: spatial + topical",
+        fillcolor="#F9E79F",
+        color="#9A7D0A"
+    ];
+    s2 [
+        label="fihrist:subject_sh85148202\nWorld history--Early works to 1800\nLC ComplexSubject\nfacets: topical + genre",
+        fillcolor="#F9E79F",
+        color="#9A7D0A"
+    ];
+    lc1 [label="lcsh:sh85068446", shape=ellipse, fillcolor="#F4F6F7", fontsize=9];
+    lc2 [label="lcsh:sh85148202", shape=ellipse, fillcolor="#F4F6F7", fontsize=9];
+
+    person -> viaf [label="skos:exactMatch"];
+    person -> lcnaf [label="skos:exactMatch"];
+    person -> contrib [label="mdhn:contributor  (inverse)"];
+    contrib -> person [label="mdhn:contributor", style=dashed, color="#AF7AC5"];
+    ms -> contrib [label="mdhn:hasContribution"];
+    contrib -> item [label="mdhn:onItem"];
+    ms -> item [label="mdhn:hasItem"];
+    item -> work [label="mdhn:referencesWork"];
+    item -> d1 [label="mdhn:hasPartItem"];
+    item -> d2 [label="mdhn:hasPartItem"];
+    item -> d3 [label="mdhn:hasPartItem"];
+    item -> d4 [label="mdhn:hasPartItem"];
+    item -> d5 [label="mdhn:hasPartItem"];
+    ms -> glam [label="mdhn:heldBy"];
+    ms -> s1 [label="mdhn:hasSubject"];
+    ms -> s2 [label="mdhn:hasSubject"];
+    s1 -> lc1 [label="skos:exactMatch"];
+    s2 -> lc2 [label="skos:exactMatch"];
+}

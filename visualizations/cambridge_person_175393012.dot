@@ -1,0 +1,78 @@
+// Auto-generated from harvest Turtle
+digraph person_neighbourhood {
+    rankdir=LR;
+    fontname="Segoe UI, Helvetica, Arial, sans-serif";
+    node [fontname="Segoe UI, Helvetica, Arial, sans-serif", fontsize=11, shape=box, style="rounded,filled"];
+    edge [fontname="Segoe UI, Helvetica, Arial, sans-serif", fontsize=9, color="#555555"];
+
+    person [
+        label="fihrist:person_175393012\nMīr Khvānd, Muḥammad ibn Khāvandshāh, 1433-1498 مير جواند، محمد بن جواندشاه",
+        fillcolor="#D6EAF8", color="#1A5276", penwidth=2
+    ];
+
+    subgraph cluster_mss {
+        label="Cambridge manuscripts (sample)";
+        color="#D5D8DC"; style="rounded";
+        ms0 [label="fihrist:manuscript_648\nG. 11\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms0 [label="contributor"];
+        ms1 [label="fihrist:manuscript_26\nAdd. 180\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms1 [label="contributor"];
+        ms2 [label="fihrist:manuscript_29\nAdd. 183\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms2 [label="contributor"];
+        ms3 [label="fihrist:manuscript_30\nAdd. 184\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms3 [label="contributor"];
+        ms4 [label="fihrist:manuscript_72\nAdd. 229\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms4 [label="contributor"];
+        ms5 [label="fihrist:manuscript_84\nAdd. 243\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms5 [label="contributor"];
+        ms6 [label="fihrist:manuscript_85\nAdd. 244\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms6 [label="contributor"];
+        ms7 [label="fihrist:manuscript_86\nAdd. 245\nrole=aut", fillcolor="#D5F5E3", color="#196F3D"];
+        person -> ms7 [label="contributor"];
+        more [label="+ 15 further Cambridge copies\nnot drawn", fillcolor="#EAFAF1", style="rounded,dashed"];
+        person -> more [style=dashed];
+    }
+
+    subgraph cluster_works {
+        label="works"; color="#F5B7B1"; style="rounded";
+        w0 [label="fihrist:work_273\nRawḍat al-ṣafā", fillcolor="#FADBD8", color="#922B21"];
+    }
+    ms0 -> w0 [label="referencesWork"];
+    ms1 -> w0 [label="referencesWork"];
+    ms2 -> w0 [label="referencesWork"];
+    ms3 -> w0 [label="referencesWork"];
+    ms4 -> w0 [label="referencesWork"];
+    ms5 -> w0 [label="referencesWork"];
+    ms6 -> w0 [label="referencesWork"];
+    ms7 -> w0 [label="referencesWork"];
+
+    subgraph cluster_subjects {
+        label="subjects of those manuscripts"; color="#F9E79F"; style="rounded";
+        s0 [label="fihrist:subject_sh85053987\nGeography Early works to 1800", fillcolor="#F9E79F", color="#9A7D0A"];
+        s1 [label="fihrist:subject_sh91005419\nIran--History--640-1256", fillcolor="#F9E79F", color="#9A7D0A"];
+        s2 [label="fihrist:subject_sh85068447\nIslamic Empire--History--622-661", fillcolor="#F9E79F", color="#9A7D0A"];
+        s3 [label="fihrist:subject_sh2009127612\nIslamic countries--Description and travel", fillcolor="#F9E79F", color="#9A7D0A"];
+        s4 [label="fihrist:subject_sh85148201\nUniversal history", fillcolor="#F9E79F", color="#9A7D0A"];
+        s5 [label="fihrist:subject_sh85067895\nIran--History", fillcolor="#F9E79F", color="#9A7D0A"];
+        s6 [label="fihrist:subject_sh85068446\nIslamic Empire--History", fillcolor="#F9E79F", color="#9A7D0A"];
+    }
+    ms0 -> s2 [label="hasSubject"];
+    ms0 -> s0 [label="hasSubject"];
+    ms0 -> s1 [label="hasSubject"];
+    ms0 -> s3 [label="hasSubject"];
+    ms0 -> s4 [label="hasSubject"];
+    ms1 -> s6 [label="hasSubject"];
+    ms1 -> s5 [label="hasSubject"];
+    ms2 -> s6 [label="hasSubject"];
+    ms2 -> s5 [label="hasSubject"];
+    ms3 -> s6 [label="hasSubject"];
+    ms3 -> s5 [label="hasSubject"];
+    ms4 -> s6 [label="hasSubject"];
+    ms4 -> s5 [label="hasSubject"];
+    ms5 -> s6 [label="hasSubject"];
+    ms5 -> s5 [label="hasSubject"];
+    ms6 -> s6 [label="hasSubject"];
+    ms6 -> s5 [label="hasSubject"];
+    ms7 -> s6 [label="hasSubject"];
+    ms7 -> s5 [label="hasSubject"];
+}
