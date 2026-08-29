@@ -1,11 +1,24 @@
 # Fihrist-As-RDF
 
+Rewrite (2026): TEI → explicit RDF knowledge graph, with HTML integrity checks and typed headings.
+
+**Read first:** [docs/SPEC.md](docs/SPEC.md) (contract) and [docs/PROGRESS.md](docs/PROGRESS.md) (method log).
+
+```text
+python fihrist.py gold --classify
+python fihrist.py harvest --collection "ancient india and iran trust"
+python fihrist.py verify --gold
+```
+
+Gold records: AIIT Pers 1.01 (`manuscript_11855`), Cambridge Add. 1064 (`manuscript_8976`).  
+Reports: `data/reports/`. RDF: `data/rdf/`.
+
 # Fihrist-As-RDF: Linked Open Data for the Fihrist Union Catalogue of Islamicate Manuscripts
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![Status](https://img.shields.io/badge/Status-Pilot%20%7C%20Ontology%20Draft-brightgreen)]()
 [![Topics](https://img.shields.io/badge/Topics-RDF%20%7C%20TEI%20%7C%20CIDOC--CRM%20%7C%20Persian%20Manuscripts%20%7C%20IIIF-blue)]()
 
-**Transforming distributed TEI XML from [fihristorg/fihrist-mss](https://github.com/fihristorg/fihrist-mss) into a richly interconnected Knowledge Graph.**
+**Transforming distributed TEI XML from [fihristorg/fihrist-mss](https://github.com/fihristorg/fihrist-mss) into a richly interconnected Ontology-bases Knowledge Graph.**
 
 This project delivers a **minimal yet expandable RDF/OWL ontology**, harvesting pipelines, and reconciled datasets with strong bindings to LC Subjects, AAT, VIAF, and Wikidata.
 
@@ -14,7 +27,7 @@ This project delivers a **minimal yet expandable RDF/OWL ontology**, harvesting 
 - **Persons**: Extend existing VIAF mappings with Wikidata.
 - **Visualizations**: Mind maps, relationship graphs, and dashboards for intuitive exploration.
 
-**Vision**: A FAIR, queryable hub linking manuscripts, persons, works, and subjects — powering your MLDCH aggregator, IIIFDexir viewers, Shahnameh modeling, and the National Digital Collection.
+**Vision**: A FAIR, queryable hub linking manuscripts, persons, works, and subjects — powering your MLDCH aggregator, Integrating with IIIFDexir.
 
 ## Project Structure (Visualization-First)
 
