@@ -187,15 +187,29 @@ Fihrist-As-RDF/
 
 **Interactive Overview** (Mermaid in repo):
 ```mermaid
-graph TD
-    A[Fihrist TEI Collections] --> B[mdhn:Manuscript]
-    B --> C[mdhn:ManuscriptItem]
-    C --> D[mdhn:Person <br>VIAF + Wikidata]
-    C --> E[mdhn:Work]
-    C --> F[mdhn:Subject <br>LCSH → AAT → Wikidata]
-    F -.-> G[AAT Getty]
-    D -.-> H[Wikidata]
-    style F fill:#e1f5fe
+flowchart LR
+    A["Fihrist TEI XML"] --> D["Parse TEI + authorities"]
+    B["Authority records"] --> D
+    C["Catalogue HTML"] --> F["Verify TEI / HTML / RDF"]
+
+    D --> E["Emit RDF graph"]
+    E --> M1["Manuscript"]
+    E --> M2["ManuscriptItem"]
+    E --> M3["Person / Agent"]
+    E --> M4["Work"]
+    E --> M5["Heading"]
+    M5 --> M6["Typed referent"]
+
+    E --> G["Classify with LC / AAT / Wikidata"]
+    E --> H["SHACL + SPARQL validation"]
+
+    F --> O1["Integrity reports"]
+    G --> O2["Classification results"]
+    H --> O3["RDF outputs"]
+
+    G1["Goal: explicit RDF KG"] --- D
+    G2["Scope: manuscript, roles, GLAM, subjects, verification"] --- E
+    G3["Out of scope: invented IDs, IIIF stack, dashboard-first product"] --- E
 ```
 
 ## Minimal Ontology (First Draft)
