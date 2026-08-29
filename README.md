@@ -13,6 +13,8 @@ python fihrist.py verify --gold
 Gold records: AIIT Pers 1.01 (`manuscript_11855`), Cambridge Add. 1064 (`manuscript_8976`).  
 Reports: `data/reports/`. RDF: `data/rdf/`.
 
+![Infographic](/images/Metadata_Transformation_Workflow.jpg)
+
 # Fihrist-As-RDF: Linked Open Data for the Fihrist Union Catalogue of Islamicate Manuscripts
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![Status](https://img.shields.io/badge/Status-Pilot%20%7C%20Ontology%20Draft-brightgreen)]()
